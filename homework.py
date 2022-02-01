@@ -127,10 +127,8 @@ class Swimming(Training):
     LEN_STEP = 1.38
 
     def get_mean_speed(self):
-        return (self.length_pool *
-                self.count_pool /
-                self.M_IN_KM /
-                self.duration)
+        return (self.length_pool * self.count_pool
+                / self.M_IN_KM / self.duration)
 
     def get_spent_calories(self):
         return (self.get_mean_speed() + 1.1) * 2 * self.weight

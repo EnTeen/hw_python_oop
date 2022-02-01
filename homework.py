@@ -79,33 +79,8 @@ class Running(Training):
         super().__init__(action, duration, weight)
 
     def get_spent_calories(self) -> float:
-        return (18 * self.get_mean_speed() - 20) * self.weight / self.M_IN_KM * (self.duration * 60)
-
-
-""" Не проходит тест ответа от наставника так и не получил
-        return (
-                (self.coeff_calorie_1 * self.get_mean_speed() -
-                 self.coeff_calorie_2) *
-                (self.weight / self.M_IN_KM * (self.duration * 60))
-        )
-        
-tests\test_homework.py:306 (test_Running_get_spent_calories[input_data0-383.85])
-383.84999999999997 != 383.85
-
-Expected :383.85
-Actual   :383.84999999999997
-<Click to see difference>
-
-Traceback (most recent call last):
-  File "E:\Dev\hw_python_oop\tests\test_homework.py", line 321, in test_Running_get_spent_calories
-    assert result == expected, (
-AssertionError: Проверьте формулу расчёта потраченных калорий в классе `Running`
-assert 383.84999999999997 == 383.85
-  +383.84999999999997
-  -383.85
-ok
-FAIL
-"""
+        return ((18 * self.get_mean_speed() - 20) *
+                self.weight / self.M_IN_KM * (self.duration * 60))
 
 
 class SportsWalking(Training):

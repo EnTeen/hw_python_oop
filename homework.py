@@ -28,6 +28,7 @@ class InfoMessage:
 
 class Training:
     """Базовый класс тренировки."""
+
     M_IN_KM = 1000
     LEN_STEP = 0.65
 
@@ -42,14 +43,17 @@ class Training:
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
+
         return self.action * self.LEN_STEP / self.M_IN_KM
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
+
         return self.get_distance() / self.duration
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
+
         pass
 
     def show_training_info(self) -> InfoMessage:
@@ -121,6 +125,7 @@ class Swimming(Training):
                  count_pool: float,
                  length_pool: float
                  ):
+
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
@@ -137,6 +142,7 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list):
     """Прочитать данные полученные от датчиков."""
+
     read = {'SWM': Swimming,
             'RUN': Running,
             'WLK': SportsWalking}
@@ -145,6 +151,7 @@ def read_package(workout_type: str, data: list):
 
 def main(training: Training) -> None:
     """Главная функция."""
+
     info = training.show_training_info()
     print(info.get_message())
 

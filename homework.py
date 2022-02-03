@@ -127,7 +127,7 @@ def read_package(workout_type: str, data: list):
     }
 
     if workout_type not in read:
-        raise ValueError('Не верный тип тренировки')
+        raise ValueError(f'Не верный тип тренировки: "{workout_type}"')
 
     return read[workout_type](*data)
 

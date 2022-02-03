@@ -63,12 +63,12 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    coeff_calorie_1 = 18
-    coeff_calorie_2 = 20
+    COEFF_CALORIE_1 = 18
+    COEFF_CALORIE_2 = 20
 
     def get_spent_calories(self) -> float:
-        return ((self.coeff_calorie_1 * self.get_mean_speed()
-                 - self.coeff_calorie_2) * self.weight / self.M_IN_KM
+        return ((self.COEFF_CALORIE_1 * self.get_mean_speed()
+                 - self.COEFF_CALORIE_2) * self.weight / self.M_IN_KM
                 * (self.duration * self.MIN_COEFF)
                 )
 
@@ -76,8 +76,8 @@ class Running(Training):
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    coeff_calorie_3 = 0.035
-    coeff_calorie_4 = 0.029
+    COEFF_CALORIE_3 = 0.035
+    COEFF_CALORIE_4 = 0.029
 
     action: int
     duration: float
@@ -85,9 +85,9 @@ class SportsWalking(Training):
     height: float
 
     def get_spent_calories(self):
-        return ((self.coeff_calorie_3 * self.weight
+        return ((self.COEFF_CALORIE_3 * self.weight
                  + (self.get_mean_speed() ** 2 // self.height)
-                 * self.coeff_calorie_4 * self.weight)
+                 * self.COEFF_CALORIE_4 * self.weight)
                 * (self.duration * self.MIN_COEFF)
                 )
 
@@ -96,8 +96,8 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP = 1.38
-    coeff_calorie_5 = 1.1
-    coeff_calorie_6 = 2
+    COEFF_CALORIE_5 = 1.1
+    COEFF_CALORIE_6 = 2
 
     action: int
     duration: float
@@ -112,23 +112,24 @@ class Swimming(Training):
         )
 
     def get_spent_calories(self):
-        return ((self.get_mean_speed() + self.coeff_calorie_5)
-                * self.coeff_calorie_6 * self.weight
+        return ((self.get_mean_speed() + self.COEFF_CALORIE_5)
+                * self.COEFF_CALORIE_6 * self.weight
                 )
 
 
 def read_package(workout_type: str, data: list):
     """Прочитать данные полученные от датчиков."""
 
-    if workout_type not in ('SWM', 'RUN', 'WLK'):
+    read = {
+        'SWM': Swimming,
+        'RUN': Running,
+        'WLK': SportsWalking,
+    }
+
+    if workout_type not in read:
         raise ValueError('Не верный тип тренировки')
-    else:
-        read = {
-            'SWM': Swimming,
-            'RUN': Running,
-            'WLK': SportsWalking,
-        }
-        return read[workout_type](*data)
+
+    return read[workout_type](*data)
 
 
 def main(training: Training) -> None:
